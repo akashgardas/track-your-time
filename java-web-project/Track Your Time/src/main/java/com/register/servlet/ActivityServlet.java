@@ -37,7 +37,7 @@ public class ActivityServlet extends HttpServlet {
 		// 2. Check if user is logged in
 		if (session == null || session.getAttribute("user_id") == null) {
 			// redirect to login page if not logged in.
-			response.sendRedirect("login.jsp");
+			request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
 			return; // stop executing
 		}
 		
@@ -50,7 +50,7 @@ public class ActivityServlet extends HttpServlet {
 		
 		// 5. Forward to the JSP 
 		request.setAttribute("activityList", activityList);
-		request.getRequestDispatcher("activities.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/views/activities.jsp").forward(request, response);
 	}
 
 	/**

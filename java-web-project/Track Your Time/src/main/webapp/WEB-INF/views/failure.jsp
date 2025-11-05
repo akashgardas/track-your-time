@@ -13,10 +13,10 @@
 </head>
 <body>
     <div>
-        <h2>Registration Successful!</h2>
-        <p>Your account has been created.</p>
-        <p><a href="register.jsp">Register Another User</a></p>
-        <p><a href="login.jsp">login</a></p>
+        <h2><%= request.getAttribute("status") %></h2>
+        <p><%= request.getAttribute("msg") %></p>
+        <p style="font-size:small;">Don't have an account? <a href="register">register</a></p>
+        <p style="font-size:small;">Already an existing user? <a href="login">login</a></p>
     </div>
 </body>
 </html>
