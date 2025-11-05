@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>User Login</title>
+<title>User Registration</title>
 <style>
     body { font-family: Arial, sans-serif; display: grid; place-items: center; min-height: 90vh; background-color: #f4f4f4; }
     form { background: #fff; border: 1px solid #ccc; padding: 25px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
@@ -21,24 +21,24 @@
 </style>
 </head>
 <body>
-	<form action="LoginServlet" method="post">
-        <h2>Login</h2>
+	<form action="register" method="post">
+        <h2>Create Account</h2>
         <div>
             <label for="uname">User Name:</label>
             <input type="text" id="uname" name="uname" required>
         </div>
         <div>
             <label for="email">Email:</label>
-            <input type="email" id="email" name="email">
+            <input type="email" id="email" name="email" required>
         </div>
         <div>
             <label for="pass">Password:</label>
             <input type="password" id="pass" name="password" required>
         </div>
         <div>
-            <input type="submit" value="Login">
+            <input type="submit" value="Register">
         </div>
-        <p>New user? <a href="register.jsp">register</a></p>
+        <p>Already an existing user? <a href="login">login</a></p>
     </form>
 </body>
 </html>

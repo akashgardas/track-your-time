@@ -15,7 +15,7 @@ import com.database.dao.UsersDAO;
 /**
  * Servlet implementation class LoginServlet
  */
-@WebServlet("/LoginServlet")
+@WebServlet("/login")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -30,6 +30,15 @@ public class LoginServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// Forward to the hidden jsp
+		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/views/login.jsp");
+		dispatcher.forward(request, response);
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String username = request.getParameter("uname");
 		String password = request.getParameter("password");
 		
@@ -51,17 +60,10 @@ public class LoginServlet extends HttpServlet {
 		else {
 			request.setAttribute("status", "Login Failed");
 			request.setAttribute("msg", "Invalid User name or Password!");
-			dispatcher = request.getRequestDispatcher("failure.jsp");
 			
+			dispatcher = request.getRequestDispatcher("/WEB-INF/views/failure.jsp");
 			dispatcher.forward(request, response);
 		}
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
 	}
 
 }

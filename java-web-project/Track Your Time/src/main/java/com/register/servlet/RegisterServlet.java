@@ -13,7 +13,7 @@ import com.database.dao.UsersDAO;
 /**
  * Servlet implementation class RegisterServlet
  */
-@WebServlet("/RegisterServlet")
+@WebServlet("/register")
 public class RegisterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -28,25 +28,7 @@ public class RegisterServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// 1. Get the form data
-		String username = request.getParameter("uname");
-		String email = request.getParameter("email");
-		String password = request.getParameter("password");
-		
-		// 2. Get UsersDAO connection
-		UsersDAO usersDao = new UsersDAO();
-		
-		// 3. Create new user
-		RequestDispatcher dispatcher = null;
-		if (usersDao.createUser(username, email, password)) {
-			request.setAttribute("status", "Registration Successful");
-			dispatcher = request.getRequestDispatcher("success.jsp");
-		} else {
-			request.setAttribute("status", "Registration Failed!");
-			request.setAttribute("msg", "User name or Email already exists!");
-			dispatcher = request.getRequestDispatcher("failure.jsp");
-		}
-		
+		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/views/register.jsp");
 		dispatcher.forward(request, response);
 	}
 
@@ -54,7 +36,27 @@ public class RegisterServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		// 1. Get the form data
+				String username = request.getParameter("uname");
+				String email = request.getParameter("email");
+				String password = request.getParameter("password");
+				
+				// 2. Get UsersDAO connection
+				UsersDAO usersDao = new UsersDAO();
+				
+				// 3. Create new user
+				RequestDispatcher dispatcher = null;
+				if (usersDao.createUser(username, email, password)) {
+					request.setAttribute("status", "Registration Successful");
+					dispatcher = request.getRequestDispatcher("/WEB-INF/views/success.jsp");
+				} else {
+					request.setAttribute("status", "Registration Failed!");
+					request.setAttribute("msg", "User name or Email already exists!");
+					
+					dispatcher = request.getRequestDispatcher("/WEB-INF/views/failure.jsp");
+				}
+				
+				dispatcher.forward(request, response);
 	}
 
 }
