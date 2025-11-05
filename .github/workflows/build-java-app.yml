@@ -1,0 +1,42 @@
+# Name of your workflow (you'll see this in GitHub)
+name: Java CI - Build Web App
+
+# 1. WHEN to run this
+on:
+  # Run when code is pushed to the 'main' branch
+  push:
+    branches:
+      - main
+    # But ONLY if files inside 'java-web-project/' were changed
+    paths:
+      - 'java-web-project/**'
+      - '.github/workflows/build-java-app.yml'
+
+  # Also allows you to run this manually from the "Actions" tab
+  workflow_dispatch:
+
+# 2. WHAT to do
+jobs:
+  build:
+    # 3. WHERE to run it (on a standard GitHub server)
+    runs-on: ubuntu-latest
+
+    # 4. HOW to do it (the steps)
+    steps:
+      # Step 1: Get your code from the repository
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      # Step 2: Set up the correct Java version (must match your pom.xml)
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: 'maven' # Speeds up future builds
+
+      # Step 3: Run the Maven build command
+      - name: Build with Maven
+        # IMPORTANT: Run the command inside your web app's folder
+        working-directory: ./java-web-project
+        run: mvn clean install
