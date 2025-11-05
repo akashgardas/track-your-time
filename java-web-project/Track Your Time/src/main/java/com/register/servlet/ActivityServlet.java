@@ -46,7 +46,7 @@ public class ActivityServlet extends HttpServlet {
 		
 		// 4. Get user activities
 		ActivitiesDAO activitiesDao = new ActivitiesDAO();
-		List<Activity> activityList = activitiesDao.getActivitiesByUserId(userId).reversed();
+		List<Activity> activityList = activitiesDao.getActivitiesByUserId(userId);
 		
 		// 5. Forward to the JSP 
 		request.setAttribute("activityList", activityList);
