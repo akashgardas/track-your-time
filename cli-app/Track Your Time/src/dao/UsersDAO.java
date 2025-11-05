@@ -1,4 +1,4 @@
-package test;
+package dao;
 
 import java.sql.Statement;
 import java.sql.PreparedStatement;

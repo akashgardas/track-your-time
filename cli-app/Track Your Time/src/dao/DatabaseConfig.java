@@ -1,4 +1,4 @@
-package test;
+package dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -6,12 +6,12 @@ import java.sql.SQLException;
 
 abstract class DatabaseConfig {
 	// Database details
-	final private String userName = "Your User Name";
-	final private String password = "Your Password";
+	final private String userName = "your user name";
+	final private String password = "your password";
 	
 	// JDBC details
 	final private String driver = "com.mysql.cj.jdbc.Driver";
-	final private String url = "jdbc:mysql://localhost:3306/Your Database Name";
+	final private String url = "jdbc:mysql://localhost:3306/your database name";
 	
 	// Database Connection
 	protected Connection con;

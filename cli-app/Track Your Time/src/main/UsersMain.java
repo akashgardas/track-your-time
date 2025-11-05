@@ -1,6 +1,8 @@
-package test;
+package main;
 
 import java.util.Scanner;
+
+import dao.UsersDAO;
 
 public class UsersMain {
 	public static void main(String[] args) {

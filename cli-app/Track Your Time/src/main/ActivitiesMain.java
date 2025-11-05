@@ -1,10 +1,12 @@
-package test;
+package main;
 
 import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Scanner;
+
+import dao.ActivitiesDAO;
 
 public class ActivitiesMain {
 
@@ -24,9 +26,7 @@ public class ActivitiesMain {
 			System.out.println("Select Operation");
 			System.out.println("\t1. Create Acitivity");
 			System.out.println("\t2. Read Acitivities");
-			System.out.println("\t3. Update Activity");
-			System.out.println("\t4. Delete Activity");
-			System.out.println("\t5. EXIT");
+			System.out.println("\t3. EXIT");
 			
 			System.out.println("Choice: ");
 			int choice = sc.nextInt();
