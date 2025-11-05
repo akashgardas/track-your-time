@@ -38,5 +38,5 @@ jobs:
       # Step 3: Run the Maven build command
       - name: Build with Maven
         # IMPORTANT: Run the command inside your web app's folder
-        working-directory: ./java-web-project
+        working-directory: ./java-web-project/Track Your Time
         run: mvn clean install
