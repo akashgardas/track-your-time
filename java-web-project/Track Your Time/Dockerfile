@@ -1,11 +1,29 @@
-# 1. Start with an official Tomcat image that includes Java 21
-# This is your "server"
+# ----- STAGE 1: The "Build" Stage -----
+# We start with a Maven/Java 21 image to build the project
+FROM maven:3.9-eclipse-temurin-21 AS build
+
+# Set the working directory inside the builder
+WORKDIR /app
+
+# Copy JUST the pom.xml first to cache dependencies
+COPY pom.xml .
+RUN mvn dependency:go-offline
+
+# Copy the rest of the source code
+COPY src ./src
+
+# Run the Maven build to create the .war file
+# This runs "mvn clean install"
+RUN mvn package -DskipTests
+
+
+# ----- STAGE 2: The "Run" Stage -----
+# Now we start fresh with the Tomcat server
 FROM tomcat:10.1-jdk21
 
-# 2. Remove the default welcome page from Tomcat
+# Remove the default welcome page
 RUN rm -rf /usr/local/tomcat/webapps/ROOT
 
-# 3. Copy your built .war file from the "target" folder 
-# and rename it to ROOT.war. This makes your app
-# the default one (e.g., .../Track_Your_Time/ becomes /)
-COPY target/Track_Your_Time.war /usr/local/tomcat/webapps/ROOT.war
+# Copy the .war file we created in the "build" stage
+# from its "target" folder into Tomcat's webapps folder.
+COPY --from=build /app/target/Track_Your_Time.war /usr/local/tomcat/webapps/ROOT.war
