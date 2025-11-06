@@ -1,0 +1,43 @@
+# Name of your workflow (you'll see this in GitHub)
+name: CD - Deploy to Render
+
+# 1. WHEN to run this
+on:
+  push:
+    branches:
+      - main  # Only run on pushes to the 'main' branch
+    paths:
+      # Only run if code in these folders changes
+      - 'java-web-project/Track Your Time/**'
+      - '.github/workflows/deploy.yml'
+
+# 2. WHAT to do
+jobs:
+  # This is the "build" job. We're re-using the one from your CI file
+  # to make sure this workflow is self-contained.
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: 'maven'
+
+      - name: Build with Maven
+        working-directory: ./java-web-project/Track Your Time
+        run: mvn clean install
+
+  # This is the NEW "deploy" job
+  deploy-to-render:
+    # This job "needs" the build job to finish successfully first
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🚀 Ping Render Deploy Hook
+        run: curl "${{ secrets.RENDER_DEPLOY_HOOK }}"
