@@ -10,9 +10,14 @@ import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 import javax.sql.DataSource; // Import DataSource
-import javax.naming.Context;     // Import JNDI classes
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
+
+//import javax.naming.Context;     // Import JNDI classes
+//import javax.naming.InitialContext;
+//import javax.naming.NamingException;
+
+//Import the HikariCP classes
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 
 import com.example.model.Activity;
 
@@ -22,12 +27,42 @@ public class ActivitiesDAO {
 
 	// Constructor: Looks up the DataSource
 	public ActivitiesDAO() {
+//		try {
+//			Context initContext = new InitialContext();
+//			Context envContext = (Context) initContext.lookup("java:comp/env");
+//			this.ds = (DataSource) envContext.lookup("jdbc/trackYourTimeProjectDB");
+//		} catch (NamingException e) {
+//			throw new RuntimeException("Could not initialize DataSource", e);
+//		}
+		
+		// 1. Read the credentials from the environment variables
+		String dbHost = System.getenv("DB_HOST");
+		String dbPort = System.getenv("DB_PORT");
+		String dbName = System.getenv("DB_NAME");
+		String dbUser = System.getenv("DB_USER");
+		String dbPass = System.getenv("DB_PASSWORD");
+		
+		// 2. Build the new JDBC URL (with SSL for cloud)
+		String jdbcUrl = "jdbc:mysql://" + dbHost + ":" + dbPort + "/" + dbName + "?sslMode=REQUIRED";
+		
+		// 3. Configure the Hikari Connection Pool
+		HikariConfig config = new HikariConfig();
+		config.setJdbcUrl(jdbcUrl);
+		config.setUsername(dbUser);
+		config.setPassword(dbPass);
+		
+		// Optional: Pool tuning settings
+		config.setMaximumPoolSize(10); // Max 10 connections
+		config.addDataSourceProperty("cachePrepStmts", "true");
+		config.addDataSourceProperty("prepStmtCacheSize", "250");
+		config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
+
+		// 4. Create the DataSource
+		// This replaces your entire JNDI lookup
 		try {
-			Context initContext = new InitialContext();
-			Context envContext = (Context) initContext.lookup("java:comp/env");
-			this.ds = (DataSource) envContext.lookup("jdbc/trackYourTimeProjectDB");
-		} catch (NamingException e) {
-			throw new RuntimeException("Could not initialize DataSource", e);
+			this.ds = new HikariDataSource(config);
+		} catch (Exception e) {
+			throw new RuntimeException("Could not initialize HikariDataSource", e);
 		}
 	}
 	
