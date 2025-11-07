@@ -78,7 +78,7 @@ public class ActivitiesDAO {
 	// CRUD Operations
 	// 1. Create
 	public void createActivity(int userId, String activityName, Time startTime, Time endTime, Date date) {
-		String insertStmt = "INSERT INTO activities VALUES (?, ?, ?, ?, ?)";
+		String insertStmt = "INSERT INTO activities (user_id, activity_name, start_time, end_time, date) VALUES (?, ?, ?, ?, ?)";
 		
 		try (Connection con = ds.getConnection();
 			 PreparedStatement pstmt = con.prepareStatement(insertStmt)) {
@@ -108,7 +108,7 @@ public class ActivitiesDAO {
 			
 			System.out.println("User Id \t Activity Name \t Start Time \t End Time \t Date");
 			while(rs.next()) {
-				System.out.println(rs.getInt(1) + " \t " + rs.getString(2) + " \t " + rs.getTime(3) + " \t " + rs.getTime(4) + " \t " + rs.getDate(5));
+				System.out.println(rs.getInt(2) + " \t " + rs.getString(3) + " \t " + rs.getTime(4) + " \t " + rs.getTime(5) + " \t " + rs.getDate(6));
 			}
 			
 		} catch (SQLException e) {
