@@ -31,6 +31,15 @@ public class UsersDAO {
 //			throw new RuntimeException("Could not initialize DataSource", e);
 //		}
 		
+		try {
+			// Manually force the Java Driver Manager to load the MySQL driver
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			
+		} catch (ClassNotFoundException e) {
+			// This will crash the app, it tells us the driver is missing
+			throw new RuntimeException("Could not find MySQL JDBC Driver in classpath", e);
+		}
+		
 		// 1. Read the credentials from the environment variables
 				String dbHost = System.getenv("DB_HOST");
 				String dbPort = System.getenv("DB_PORT");
