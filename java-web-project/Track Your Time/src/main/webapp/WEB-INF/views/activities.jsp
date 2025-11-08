@@ -1,9 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.List, com.example.model.Activity, java.time.LocalDate, java.time.LocalTime, java.sql.Time" %>
-<%
-	String today = LocalDate.now().toString();
-	Time time = Time.valueOf(LocalTime.now());
-%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -262,7 +258,7 @@
                 </div>
                 <div class="form-group">
                     <label for="date">Date</label>
-                    <input type="date" id="date" name="activity_date" value="<%= today %>" required>
+                    <input type="date" id="date" name="activity_date" required>
                 </div>
                 <div class="form-group">
                     <label for="start">Start Time</label>
@@ -270,7 +266,7 @@
                 </div>
                 <div class="form-group">
                     <label for="end">End Time</label>
-                    <input type="time" id="end" name="end_time" value="<%= time %>" required>
+                    <input type="time" id="end" name="end_time" required>
                 </div>
                 
                 <button type="submit" class="btn btn-secondary">Add Activity</button>
@@ -317,5 +313,19 @@
             </div>
         </div>	
     </div>
+    
+    <script>
+		window.addEventListener("load", () => {
+		    const now = new Date();
+		
+		    // Set date
+		    document.getElementById("date").value = now.toISOString().split("T")[0];
+		
+		    // Set time (hh:mm)
+		    const timeString = now.toTimeString().slice(0, 5);
+		    document.getElementById("end").value = timeString;
+		});
+	</script>
+    
 </body>
 </html>

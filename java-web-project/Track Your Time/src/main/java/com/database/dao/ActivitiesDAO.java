@@ -72,7 +72,7 @@ public class ActivitiesDAO {
 	// 2.2 Read specific user activities.
 	public List<Activity> getActivitiesByUserId(int userId) {
 		List<Activity> activityList = new ArrayList<>();
-		String selectQuery = "SELECT activity_name, start_time, end_time, date FROM activities WHERE user_id = ? order by date";
+		String selectQuery = "SELECT activity_name, start_time, end_time, date FROM activities WHERE user_id = ? order by date DESC, end_time DESC, start_time DESC";
 		String activity;
 		Time startTime, endTime;
 		Date date;

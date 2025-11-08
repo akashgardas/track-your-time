@@ -1,4 +1,4 @@
-package com.register.servlet;
+package com.servlet.controller;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
