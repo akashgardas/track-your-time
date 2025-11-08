@@ -46,7 +46,7 @@ public class AddActivityServlet extends HttpServlet {
         System.out.println(request.getParameter("start_time")+":00");
         Time startTime = Time.valueOf((String) request.getParameter("start_time") + ":00");
         System.out.println(request.getParameter("end_time"));
-        Time endTime = Time.valueOf((String) request.getParameter("end_time"));
+        Time endTime = Time.valueOf((String) request.getParameter("end_time") + ":00");
         System.out.println(request.getParameter("activity_date"));
         Date date = Date.valueOf((String) request.getParameter("activity_date"));
         

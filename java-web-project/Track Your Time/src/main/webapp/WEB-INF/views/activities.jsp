@@ -2,11 +2,15 @@
 <%@ page import="java.util.List, com.example.model.Activity, java.time.LocalDate, java.time.LocalTime, java.sql.Time" %>
 <!DOCTYPE html>
 <html>
+<%
+    String today = LocalDate.now().toString();
+%>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Activity</title>
-    <link rel="stylesheet" href="<%= request.getContextPath() %>/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
     <style>
     	/* --- Global Styles --- */
 		body {
@@ -258,7 +262,7 @@
                 </div>
                 <div class="form-group">
                     <label for="date">Date</label>
-                    <input type="date" id="date" name="activity_date" required>
+                    <input type="date" id="date" name="activity_date" value="<%= today %>" required>
                 </div>
                 <div class="form-group">
                     <label for="start">Start Time</label>
@@ -313,19 +317,6 @@
             </div>
         </div>	
     </div>
-    
-    <script>
-		window.addEventListener("load", () => {
-		    const now = new Date();
-		
-		    // Set date
-		    document.getElementById("date").value = now.toISOString().split("T")[0];
-		
-		    // Set time (hh:mm)
-		    const timeString = now.toTimeString().slice(0, 5);
-		    document.getElementById("end").value = timeString;
-		});
-	</script>
-    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
